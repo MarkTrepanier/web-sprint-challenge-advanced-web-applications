@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Login = (props) => {
     const iniitialState = {
@@ -10,6 +10,9 @@ const Login = (props) => {
     }
     const [login, setLogin] = useState(iniitialState)
     const [error, setError] = useState('')
+
+    const history = useHistory();
+
     const handleChange = (e) => {
         setLogin({
             ...login,
@@ -22,7 +25,7 @@ const Login = (props) => {
             .then(res=>{
                 console.log(res)
                 localStorage.setItem('token',res.data.token)
-                return <Redirect to='/view'/>
+                history.push('/view')
             })
             .catch(er=>{console.log(er)})
     }
@@ -31,7 +34,7 @@ const Login = (props) => {
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
-            <FormGroup onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label for='username'>username</label>
                     <input tye='text' id='username' name='username' value={login.username} onChange={handleChange}/>
@@ -41,7 +44,7 @@ const Login = (props) => {
                     <input type='password' id='password' name='password' value={login.password} onChange={handleChange}/>
                 </div>
                 <button id='submit'>login</button>
-            </FormGroup>
+            </form>
             <p id='error'>{error}</p>
         </ModalContainer>
     </ComponentContainer>);
