@@ -1,12 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 const Login = () => {
+    const iniitialState = {
+        username: '',
+        password:''
+    }
+    const [login, setLogin] = useState(iniitialState)
     
+    const handleChange = (e) => {
+        setLogin({
+            ...login,
+            [e.target.name]: e.target.value
+        })
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+            <FormGroup onSubmit={handleSubmit}>
+                <div>
+                    <label for='username'>username</label>
+                    <input tye='text' id='username' name='username' value={login.username} onChange={handleChange}/>
+                </div>
+                <div>
+                    <label for='password'>password</label>
+                    <input type='password' id='password' name='password' value={login.password} onChange={handleChange}/>
+                </div>
+                <button>login</button>
+            </FormGroup>
         </ModalContainer>
     </ComponentContainer>);
 }
@@ -43,6 +68,7 @@ const Label = styled.label`
 
 const FormGroup = styled.form`
     padding:1rem;
+    box-shadow:  1px 1px 10px 0px #666 inset
 `
 
 const Input = styled.input`
