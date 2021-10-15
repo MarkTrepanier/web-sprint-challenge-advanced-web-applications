@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
     const iniitialState = {
         username: '',
         password:'',
@@ -17,9 +18,12 @@ const Login = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/api/login', login)
+        axios.post('http://localhost:5000/api/login', login)
             .then(res=>{
-                console.log('success')})
+                console.log(res)
+                localStorage.setItem('token',res.data.token)
+                return <Redirect to='/view'/>
+            })
             .catch(er=>{console.log(er)})
     }
     
