@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Article from './Article';
 import articleService from '../services/articleServices';
 import EditForm from './EditForm';
+import axios from 'axios';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 const View = (props) => {
     const [articles, setArticles] = useState([]);
@@ -14,7 +16,17 @@ const View = (props) => {
         articleService(setArticles)
     })
 
+    const deleteArticle = id => {
+        setArticles(articles.filter(item => item.id !== Number(id)))
+    }
     const handleDelete = (id) => {
+        axiosWithAuth().delete(`http://localhost:5000/api/articles/${id}`)
+            .then(res=>{
+                deleteArticle(id)
+            })
+            .catch(er=>{
+                console.log(er)
+            })
     }
 
     const handleEdit = (article) => {
