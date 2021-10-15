@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 const initialArticle = {
     id:"",
@@ -12,6 +13,18 @@ const initialArticle = {
 const EditForm = (props)=> {
     const [article, setArticle]  = useState(initialArticle);
     const {handleEdit, handleEditCancel, editId} = props;
+
+    useEffect(()=>{
+        axiosWithAuth()
+        .get(`http://localhost:5000/api/articles/${editId}`)
+        .then(res=>{
+            setArticle(res.data)
+        })
+        .catch(er=>{
+            console.log('issue with editForm fetch');
+            console.log(er);
+        })
+    },[])
 
     const handleChange = (e)=> {
         setArticle({
@@ -49,7 +62,7 @@ const EditForm = (props)=> {
             <label>Body</label>
             <input value={article.body} id="body" name="body" onChange={handleChange}/>
         </div>
-        <Button id="editButton">Edit Article</Button>
+        <Button id="editButton" >Edit Article</Button>
         <Button onClick={handleCancel}>Cancel</Button>
     </FormContainer>);
 }
