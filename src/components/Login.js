@@ -1,13 +1,14 @@
+import axios from 'axios';
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
 const Login = () => {
     const iniitialState = {
         username: '',
-        password:''
+        password:'',
     }
     const [login, setLogin] = useState(iniitialState)
-    
+    const [error, setError] = useState('')
     const handleChange = (e) => {
         setLogin({
             ...login,
@@ -16,7 +17,12 @@ const Login = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
+        axios.post('http://localhost:3000/api/login', login)
+            .then(res=>{
+                console.log('success')})
+            .catch(er=>{console.log(er)})
     }
+    
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
@@ -30,8 +36,9 @@ const Login = () => {
                     <label for='password'>password</label>
                     <input type='password' id='password' name='password' value={login.password} onChange={handleChange}/>
                 </div>
-                <button>login</button>
+                <button id='submit'>login</button>
             </FormGroup>
+            <p id='error'>{error}</p>
         </ModalContainer>
     </ComponentContainer>);
 }
