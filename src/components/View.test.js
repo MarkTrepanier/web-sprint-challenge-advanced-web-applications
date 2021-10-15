@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import View from './View';
-import {articleService as mockArticleService} from '../services/articleServices';
+import mockArticleService from '../services/articleServices';
 jest.mock('../services/articleServices')
 
 const testArticlesNone=[]
@@ -36,12 +36,8 @@ const testArticles=[
 ]
 
 test("renders zero articles without errors", async () => {
-    // mockArticleService.mockResolvedValueOnce(testArticlesNone);
-    // render(<View/>)
-    // await waitFor(()=>{
-    //     const articles= screen.queryAllByText(/by/i);
-    //     console.log(articles);
-    // })
+    mockArticleService.mockResolvedValue();
+    render(<View/>)
 
 });
 
