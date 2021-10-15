@@ -7,14 +7,14 @@ import EditForm from './EditForm';
 import axios from 'axios';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
-const View = (props) => {
+const View = () => {
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
     useEffect(()=>{
         articleService(setArticles)
-    })
+    },[articles])
 
     const deleteArticle = id => {
         setArticles(articles.filter(item => item.id !== Number(id)))
