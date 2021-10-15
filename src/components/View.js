@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Article from './Article';
+import articleService from '../services/articleServices';
 import EditForm from './EditForm';
 
 const View = (props) => {
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
+
+    useEffect(()=>{
+        articleService(setArticles)
+    })
 
     const handleDelete = (id) => {
     }
