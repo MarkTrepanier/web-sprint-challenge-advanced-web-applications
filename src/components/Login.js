@@ -25,9 +25,13 @@ const Login = (props) => {
             .then(res=>{
                 console.log(res)
                 localStorage.setItem('token',res.data.token)
+                setError('')
                 history.push('/view')
             })
-            .catch(er=>{console.log(er)})
+            .catch(er=>{
+                console.log(er)
+                setError('username or password incorrect')
+            })
     }
     
     return(<ComponentContainer>
